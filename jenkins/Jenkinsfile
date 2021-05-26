@@ -48,7 +48,10 @@ pipeline {
                 script {
                     String gitRepo = "${env.GIT_URL}".substring(8)
                     withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${GIT_PASSWORD}@${gitRepo} develop"
+                        script {
+							env.ENC_PASS=URLEncoder.encode(GIT_PASSWORD, "UTF-8")
+						}
+						sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:develop"
                     }
                 }
             }
@@ -68,7 +71,10 @@ pipeline {
                     sh "git tag ${pomVersion}"
                     String gitRepo = "${env.GIT_URL}".substring(8)
                     withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${GIT_PASSWORD}@${gitRepo} HEAD:master ${pomVersion}"
+                        script {
+							env.ENC_PASS=URLEncoder.encode(GIT_PASSWORD, "UTF-8")
+						}
+						sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:master ${pomVersion}"
                     }
                 }
             }
