@@ -51,7 +51,11 @@ pipeline {
                         script {
 							env.ENC_PASS=URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 						}
-						sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:develop"
+						sh """ 
+						set +x
+						git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:develop"
+						set -x
+						"""
                     }
                 }
             }
@@ -74,8 +78,12 @@ pipeline {
                         script {
 							env.ENC_PASS=URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 						}
-						sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:master ${pomVersion}"
-                    }
+						sh """ 
+						set +x
+						git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:master ${pomVersion}"
+						set -x
+						"""
+					}
                 }
             }
         }
