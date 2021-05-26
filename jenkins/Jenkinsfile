@@ -48,7 +48,7 @@ pipeline {
                 script {
                     String gitRepo = "${env.GIT_URL}".substring(8)
                     withCredentials([usernamePassword(credentialsId: 'git-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh "git push origin HEAD:develop"
+                        sh "git -c http.sslVerify=false push https://${GIT_USERNAME}:${GIT_PASSWORD}@${gitRepo} develop"
                     }
                 }
             }
