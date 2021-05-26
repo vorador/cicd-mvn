@@ -53,7 +53,7 @@ pipeline {
 						}
 						sh """ 
 						set +x
-						git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:develop"
+						git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:develop
 						set -x
 						"""
                     }
@@ -80,7 +80,7 @@ pipeline {
 						}
 						sh """ 
 						set +x
-						git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:master ${pomVersion}"
+						git -c http.sslVerify=false push https://${GIT_USERNAME}:${ENC_PASS}@${gitRepo} HEAD:master ${pomVersion}
 						set -x
 						"""
 					}
